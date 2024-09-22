@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Photo Gallery</title>
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        .photo-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .photo {
+            flex-basis: calc(25% - 10px);
+            margin-bottom: 10px;
+        }
+
+        .photo img {
+            width: 100%;
+            height: auto;
+        }
+        table {
+            width: 100%; /* Table takes up full width of the body */
+            border-collapse: collapse;
+        }
+
+        /* Adjust the column widths */
+        td:nth-child(1) {
+            width: 70%;
+        }
+
+        td:nth-child(2) {
+            width: 30%;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Photo Gallery ({{ photos|length }} photos)</h1>
+    <table>
+      <tr>
+          <td>
+              <form action="/search" method="post">
+                  <input type="text" name="search" placeholder="Search by title">
+                  <input type="submit" value="Search">
+              </form>
+
+          </td>
+          <td>
+              <form method="POST" action="/load_photos">
+                  <label for="file_name">Enter File Name: </label>
+                  <input type="text" id="file_name" name="file_name">
+                  <input type="submit" value="Load Photos">
+              </form>
+
+          </td>
+      </tr>
+    </table>
+
+    <br>
+    <!-- Display the list of all files in a straight line with tabs -->
+    <p><strong>All Files in the "upload" folder:</strong><br>
+        {% for file in files %}
+            {{ file }} &nbsp;&nbsp;&nbsp;
+        {% endfor %}
+    </p>
+    <br>
+    
+    {% if search_query %}
+    <p>You searched for: {{ search_query }}</p>
+    {% endif %}
+    
+    <div class="photo-gallery">
+        {% for photo in photos %}
+        <div class="photo">
+            <a href="/photo/{{ photo.index }}">
+                <img src="{{ photo.image }}" alt="{{ photo.title }}">
+            </a>
+            <p>{{ loop.index }}. {{ photo.title }}</p>
+        </div>
+        {% if loop.index % 4 == 0 %}
+            </div>
+            <div class="photo-gallery">
+        {% endif %}
+        {% endfor %}
+    </div>
+</body>
+</html>

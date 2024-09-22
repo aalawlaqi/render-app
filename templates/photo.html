@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ photo.title }}</title>
+    <style>
+        img {
+            width: 400px; /* Adjust the width to your preference */
+            height: auto; /* Maintain aspect ratio */
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ photo.title }}</h1>
+    <img src="{{ photo.image }}" alt="{{ photo.title }}">
+    <p>URL: {{ photo.url }}</p>
+    <p>Channel: {{ photo.channel }}</p>
+    <p>Icon: {{ photo.icon }}</p>
+
+    <a href="{{ url_for('index') }}">Go Back</a>
+</body>
+</html>
+
