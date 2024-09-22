@@ -1,3 +1,5 @@
 venv/
 venv
 .venv
+*.ds_store
+*.txt
